@@ -6,11 +6,13 @@ from app.api.v1.models import OrdersModel
 class DelieryOrders(Resource, OrdersModel):
 
     def __init__(self):
-        pass
+        self.db = OrdersModel()
 
+    def get(self):
+        result = self.db.get_orders()
 
+        return make_response(jsonify({"message": "Delivery orders", "Delivery orders list": result}))
+        
 class DelieryOrder(Resource, OrdersModel):
 
-    def __init__(self):
-        pass
-
+    pass
