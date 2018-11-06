@@ -26,4 +26,40 @@ users = [{
 class OrdersModel(object):
 
     def create_order(self, order_no, pick_up, delivery, weight, price, sender):
-        pass
+        today = date.today()
+
+        created = today.strftime("%d/%m/%Y")
+
+        order = {
+            "order id": len(orders) + 1,
+            "order no": order_no,
+            "date created": created,
+            "pick up location": pick_up,
+            "delivery location": delivery,
+            "current location": pick_up,
+            "weight": weight,
+            "price": price,
+            "status": "pending",
+            "sender": sender
+        }
+
+        orders.append(order)
+
+        return order
+
+    def get_orders(self):
+        for order in orders:
+            for user in users:
+                if user['user id'] == order['sender']:
+                    order['sender'] = user['username']
+                    break
+
+        return orders
+
+    def get_order(self, order_id):
+        result = {"message" : "order unknown"}
+        for order in orders:
+            if order['order id'] == order_id:
+                result = order
+
+        return result
