@@ -18,6 +18,7 @@ class OrdersModel(object):
 
     def __init__(self):
         self.user = UsersModel()
+        self.users = self.user.get_users()
 
     def create_order(self, order_no, pick_up, delivery, weight, price, sender):
         today = date.today()
@@ -42,9 +43,8 @@ class OrdersModel(object):
         return order
 
     def get_orders(self):
-        users = self.user.get_users()
         for order in orders:
-            for user in users:
+            for user in self.users:
                 if user['user id'] == order['sender']:
                     order['sender'] = user['username']
                     break
@@ -73,6 +73,13 @@ class OrdersModel(object):
         return result
 
     def get_user_orders(self, user_id):
-        user_orders = [order for order in orders if order['sender'] == user_id]
+        user_orders = []
+        for order in orders:
+            if order['sender'] == user_id:
+                for user in self.users:
+                    if user['user id'] == order['sender']:
+                        order['sender'] = user['username']
+                        break
+                user_orders.append(order)
 
         return user_orders
