@@ -114,6 +114,18 @@ class TestDeliveryOrders(unittest.TestCase):
         result = json.loads(response.data)
         self.assertIn('delivered', str(result))
 
+    def test_get_in_transit_orders_for_user(self):
+        response = self.app.post(
+            '/api/v1/parcels', data=json.dumps(self.data), content_type='application/json')
+        self.assertEqual(response.status_code, 201)
+
+        response = self.app.get(
+            '/api/v1/users/1/in-transit', content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+
+        result = json.loads(response.data)
+        self.assertIn('in-transit', str(result))
+
 
 if __name__ == '__main__':
     unittest.main()
