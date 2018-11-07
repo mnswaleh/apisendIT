@@ -33,5 +33,20 @@ class DeliveryOrder(Resource, OrdersModel):
         result = self.db.get_order(parcelId)
 
         return make_response(jsonify(result))
+
+    def put(self, parcelId):
+        result = self.db.cancel_order(parcelId)
+
+        return make_response(jsonify(result))
+
+class DeliveryOrderUpdate(Resource, OrdersModel):
+
+    def __init__(self):
+        self.db = OrdersModel()
+
+    def put(self, parcelId):
+        result = self.db.cancel_order(parcelId)
+
+        return make_response(jsonify({"message": "order " + parcelId + " is canceled!", "Order " + parcelId: result}))
         
 

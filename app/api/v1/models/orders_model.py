@@ -13,6 +13,7 @@ orders = [{
     "sender": 1
 }]
 
+
 class OrdersModel(object):
 
     def __init__(self):
@@ -55,6 +56,17 @@ class OrdersModel(object):
 
         for order in orders:
             if order['order no'] == order_id:
+                result = order
+                break
+
+        return result
+
+    def cancel_order(self, order_id):
+        result = {"message": "order unknown"}
+
+        for order in orders:
+            if order['order no'] == order_id:
+                order['status'] = "canceled"
                 result = order
                 break
 
