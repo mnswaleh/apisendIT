@@ -54,7 +54,7 @@ class TestDeliveryOrders(unittest.TestCase):
         self.assertEqual(response.status_code, 201)
 
         response = self.app.get(
-            '/api/v1/parcels/588356', content_type='application/json')
+            '/api/v1/users/1/parcels', content_type='application/json')
         self.assertEqual(response.status_code, 200)
 
         result = json.loads(response.data)
