@@ -60,6 +60,18 @@ class TestDeliveryOrders(unittest.TestCase):
         result = json.loads(response.data)
         self.assertIn('588356', str(result))
 
+    def test_cancel_delivery_order(self):
+        response = self.app.post(
+            '/api/v1/parcels', data=json.dumps(self.data), content_type='application/json')
+        self.assertEqual(response.status_code, 201)
+
+        response = self.app.put(
+            '/api/v1/parcels/588356/cancel', content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+
+        result = json.loads(response.data)
+        self.assertIn('canceled', str(result))
+
 
 if __name__ == '__main__':
     unittest.main()
