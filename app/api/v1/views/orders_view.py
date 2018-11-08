@@ -15,8 +15,8 @@ class DeliveryOrders(Resource, OrdersModel, UsersModel):
         return make_response(jsonify({"Title": "Delivery orders", "Delivery orders list": result}))
 
     def post(self):
-        
-        data = request.get_json(force = True)
+
+        data = request.get_json(force=True)
 
         result = self.db.create_order(data['order no'], data['pick up location'],
                                       data['delivery location'], data['weight'], data['price'], data['sender'])
@@ -35,11 +35,13 @@ class DeliveryOrder(Resource, OrdersModel):
         return make_response(jsonify(result))
 
     def put(self, parcelId):
-        data = request.get_json(force = True)
-    
-        result = self.db.update_order(parcelId, data['current location'], data['status'])
+        data = request.get_json(force=True)
+
+        result = self.db.update_order(
+            parcelId, data['current location'], data['status'])
 
         return make_response(jsonify(result))
+
 
 class DeliveryOrderUpdate(Resource, OrdersModel):
 
@@ -50,5 +52,3 @@ class DeliveryOrderUpdate(Resource, OrdersModel):
         result = self.db.cancel_order(parcelId)
 
         return make_response(jsonify({"message": "order " + parcelId + " is canceled!", "Order " + parcelId: result}))
-        
-
