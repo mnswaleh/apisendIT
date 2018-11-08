@@ -61,6 +61,18 @@ class OrdersModel(object):
 
         return result
 
+    def update_order(self, order_id, location, status):
+        result = {"message": "order unknown"}
+
+        for order in orders:
+            if order['order no'] == order_id:
+                order['current location'] = location
+                order['status'] = status
+                result = order
+                break
+
+        return result
+
     def cancel_order(self, order_id):
         result = {"message": "order unknown"}
 
