@@ -1,7 +1,7 @@
 from flask_restful import Api, Resource
 from flask import Blueprint
 from app.api.v1.views.orders_view import DeliveryOrders, DeliveryOrder, DeliveryOrderUpdate, DeliveryOrderDeliveryUpdate
-from app.api.v1.views.users_view import UserOrders, UserDeliveredOrders
+from app.api.v1.views.users_view import UserOrders, UserDeliveredOrders, UserOrdersInTransit
 
 version1 = Blueprint('sendit', __name__, url_prefix="/api/v1")
 
@@ -13,3 +13,4 @@ api.add_resource(DeliveryOrderUpdate, '/parcels/<parcelId>/cancel')
 api.add_resource(DeliveryOrderDeliveryUpdate, '/parcels/<parcelId>/change-delivery')
 api.add_resource(UserOrders, '/users/<int:userId>/parcels')
 api.add_resource(UserDeliveredOrders, '/users/<int:userId>/delivered')
+api.add_resource(UserOrdersInTransit, '/users/<int:userId>/in-transit')

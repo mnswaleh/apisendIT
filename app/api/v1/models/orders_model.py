@@ -108,13 +108,11 @@ class OrdersModel(object):
         return user_orders
 
     def get_delivered_orders(self, user_id):
-        user_orders = []
-        for order in orders:
-            if order['sender'] == user_id and order['status'] == 'delivered':
-                for user in self.users:
-                    if user['user id'] == order['sender']:
-                        order['sender'] = user['username']
-                        break
-                user_orders.append(order)
+        user_orders = [order for order in orders if (order['sender'] == user_id and order['status'] == 'delivered')]
+
+        return len(user_orders)
+
+    def get_orders_in_transit(self, user_id):
+        user_orders = [order for order in orders if (order['sender'] == user_id and order['status'] == 'in transit')]
 
         return len(user_orders)
