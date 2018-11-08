@@ -28,3 +28,15 @@ class UserDeliveredOrders(Resource, UsersModel, OrdersModel):
         result = self.orders.get_delivered_orders(userId)
 
         return make_response(jsonify({"Delivered orders for " + user['username'] : result}))
+
+class UserOrdersInTransit(Resource, UsersModel, OrdersModel):
+
+    def __init__(self):
+        self.db = UsersModel()
+        self.orders = OrdersModel()
+
+    def get(self, userId):
+        user = self.db.get_user(userId)
+        result = self.orders.get_orders_in_transit(userId)
+
+        return make_response(jsonify({"Orders in-transit for " + user['username'] : result}))
