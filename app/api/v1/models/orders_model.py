@@ -106,3 +106,15 @@ class OrdersModel(object):
                 user_orders.append(order)
 
         return user_orders
+
+    def get_delivered_orders(self, user_id):
+        user_orders = []
+        for order in orders:
+            if order['sender'] == user_id and order['status'] == 'delivered':
+                for user in self.users:
+                    if user['user id'] == order['sender']:
+                        order['sender'] = user['username']
+                        break
+                user_orders.append(order)
+
+        return len(user_orders)

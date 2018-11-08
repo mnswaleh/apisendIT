@@ -108,11 +108,11 @@ class TestDeliveryOrders(unittest.TestCase):
         self.assertEqual(response.status_code, 201)
 
         response = self.app.get(
-            '/api/v1/users/1/parcels', content_type='application/json')
+            '/api/v1/users/1/delivered', content_type='application/json')
         self.assertEqual(response.status_code, 200)
 
         result = json.loads(response.data)
-        self.assertIn('delivered', str(result))
+        self.assertIn('Delivered', str(result))
 
     def test_get_in_transit_orders_for_user(self):
         response = self.app.post(
