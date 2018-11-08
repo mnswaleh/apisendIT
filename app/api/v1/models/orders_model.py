@@ -84,6 +84,17 @@ class OrdersModel(object):
 
         return result
 
+    def change_delivery(self, order_id, delivery_location):
+        result = {"message": "order unknown"}
+
+        for order in orders:
+            if order['order no'] == order_id:
+                order['current location'] = delivery_location
+                result = order
+                break
+
+        return result
+
     def get_user_orders(self, user_id):
         user_orders = []
         for order in orders:
