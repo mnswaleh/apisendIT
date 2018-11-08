@@ -35,7 +35,9 @@ class DeliveryOrder(Resource, OrdersModel):
         return make_response(jsonify(result))
 
     def put(self, parcelId):
-        result = self.db.cancel_order(parcelId)
+        data = request.get_json(force = True)
+    
+        result = self.db.update_order(parcelId, data['current location'], data['status'])
 
         return make_response(jsonify(result))
 
