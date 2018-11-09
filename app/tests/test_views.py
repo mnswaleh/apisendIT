@@ -14,8 +14,8 @@ class TestDeliveryOrders(unittest.TestCase):
         self.user_data = {
             "user id": 1,
             "username": "tom",
-            "first name": "thomas",
-            "second name": "wakati",
+            "first_name": "thomas",
+            "second_name": "wakati",
             "email": "email@gmail.com",
             "gender": "male",
             "location": "eldoret",

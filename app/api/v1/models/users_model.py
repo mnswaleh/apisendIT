@@ -1,15 +1,5 @@
 """Users Module"""
-users = [{
-    "user id": 1,
-    "username": "tom",
-    "first name": "thomas",
-    "second name": "wakati",
-    "email": "email@gmail.com",
-    "gender": "male",
-    "location": "eldoret",
-    "password": "123456",
-    "type": "user"
-}]
+users = []
 
 
 class UsersModel():
@@ -21,7 +11,7 @@ class UsersModel():
     def create_user(self, username, first_name, second_name, email, gender, location, password):
         """Create order and append it to orders"""
         user = {
-            "user_id": len(self.user_db) + 1,
+            "user id": len(self.user_db) + 1,
             "username": username,
             "first_name": first_name,
             "second_name": second_name,
