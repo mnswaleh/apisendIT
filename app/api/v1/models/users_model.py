@@ -9,7 +9,7 @@ class UsersModel():
         self.user_db = users
 
     def create_user(self, username, first_name, second_name, email, gender, location, password):
-        """Create order and append it to orders"""
+        """Create user and append to users db"""
         user = {
             "user id": len(self.user_db) + 1,
             "username": username,

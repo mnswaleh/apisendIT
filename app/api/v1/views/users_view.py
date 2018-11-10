@@ -3,10 +3,10 @@
 from flask import make_response, jsonify, request
 from flask_restful import Resource
 from app.api.v1.models.users_model import UsersModel
-from app.api.v1.models.orders_model import OrdersModel
+from app.api.v1.models.orders_model import OrdersModel, ValidateInputs
 
 class Users(Resource):
-    """Create Delivery Orders Object to create delivery order and fetch all orders"""
+    """Create users class to create a user orders"""
 
     def __init__(self):
         self.orders_db = UsersModel()
@@ -14,11 +14,15 @@ class Users(Resource):
     def post(self):
         """Create delivery User"""
         data = request.get_json(force=True)
-        
-        result = self.orders_db.create_user(data['username'], data['first_name'],
-                                             data['second_name'], data['email'], data['gender'], data['location'], data['password'])
+        inputs_validate = ValidateInputs(data, 'create_user')
+        data_validation = inputs_validate.confirm_input()
+        if data_validation != "ok":
+            return make_response(jsonify({"Error": data_validation}), 400)
+        else:
+            result = self.orders_db.create_user(data['username'], data['first_name'],
+                                                data['second_name'], data['email'], data['gender'], data['location'], data['password'])
 
-        return make_response(jsonify(result), 201)
+            return make_response(jsonify(result), 201)
 
 
 class UserOrders(Resource):
