@@ -173,7 +173,7 @@ class ValidateInputs():
 
     def create_order_inputs(self):
         """confirm inputs for creating order"""
-        if 'username' in self.user_input and 'order no' in self.user_input and 'pick up location' in self.user_input and 'delivery location' in self.user_input and 'weight' in self.user_input and 'price' in self.user_input and 'sender' in self.user_input:
+        if 'order no' in self.user_input and 'pick up location' in self.user_input and 'delivery location' in self.user_input and 'weight' in self.user_input and 'price' in self.user_input and 'sender' in self.user_input:
             if not self.user_input['order no']:
                 message = "order no missing"
             elif not self.user_input['pick up location']:
