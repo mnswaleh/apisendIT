@@ -212,8 +212,6 @@ class ValidateInputs():
         if 'delivery location' in self.user_input:
             if not self.user_input['delivery location']:
                 message = "delivery location missing"
-            elif not self.user_input['status']:
-                message = "status missing"
             else:
                 message = "ok"
         else:
