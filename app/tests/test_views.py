@@ -102,7 +102,6 @@ class TestDeliveryOrders(unittest.TestCase):
         result = json.loads(response.data)
         self.assertIn('kikuyu', str(result))
 
-
     def test_change_delivery_location(self):
         """Test endpoint to change delivery location"""
         self.test_create_order()

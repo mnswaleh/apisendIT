@@ -89,7 +89,7 @@ class OrdersModel():
 
         for order in self.order_db:
             if order['order no'] == order_id:
-                order['current location'] = delivery_location
+                order['delivery location'] = delivery_location
                 result = order
                 break
 
