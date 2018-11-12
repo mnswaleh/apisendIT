@@ -14,7 +14,7 @@ class DeliveryOrders(Resource):
     def get(self):
         """Fetch all orders"""
         result = self.orders_db.get_orders()
-        
+
         return make_response(jsonify({"Title": "Delivery orders", "Delivery orders list": result}))
 
     def post(self):
@@ -26,7 +26,7 @@ class DeliveryOrders(Resource):
             return make_response(jsonify({"Error": data_validation}), 400)
         else:
             result = self.orders_db.create_order(data['order no'], data['pick up location'],
-                                                data['delivery location'], data['weight'], data['price'], data['sender'])
+                                                 data['delivery location'], data['weight'], data['price'], data['sender'])
 
             return make_response(jsonify(result), 201)
 
@@ -84,6 +84,7 @@ class DeliveryOrderDeliveryUpdate(Resource):
         if data_validation != "ok":
             return make_response(jsonify({"Error": data_validation}), 400)
         else:
-            result = self.orders_db.change_delivery(parcelId, data['delivery location'])
+            result = self.orders_db.change_delivery(
+                parcelId, data['delivery location'])
 
-            return make_response(jsonify({"message": "order " + parcelId + "Delivery location changed!", "Order " + parcelId: result}))
+            return make_response(jsonify({"message": "order " + parcelId + " Delivery location changed!", "Order " + parcelId: result}))

@@ -5,6 +5,7 @@ from flask_restful import Resource
 from app.api.v1.models.users_model import UsersModel
 from app.api.v1.models.orders_model import OrdersModel, ValidateInputs
 
+
 class Users(Resource):
     """Create users class to create a user orders"""
 
