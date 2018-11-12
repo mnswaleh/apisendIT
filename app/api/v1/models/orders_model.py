@@ -1,4 +1,5 @@
 from datetime import date
+from .users_model import UsersModel
 orders = [{
     "order id": 1,
     "order no": "678356",
@@ -12,18 +13,10 @@ orders = [{
     "sender": 1
 }]
 
-users = [{
-    "user id": 1,
-    "username": "tom",
-    "first name": "thomas",
-    "second name": "wakati",
-    "email": "email@gmail.com",
-    "gender": "male",
-    "location": "eldoret"
-}]
-
-
 class OrdersModel(object):
+
+    def __init__(self):
+        self.user = UsersModel()
 
     def create_order(self, order_no, pick_up, delivery, weight, price, sender):
         today = date.today()
@@ -48,6 +41,7 @@ class OrdersModel(object):
         return order
 
     def get_orders(self):
+        users = self.user.get_users()
         for order in orders:
             for user in users:
                 if user['user id'] == order['sender']:
@@ -57,10 +51,16 @@ class OrdersModel(object):
         return orders
 
     def get_order(self, order_id):
-        result = {"message" : "order unknown"}
+        result = {"message": "order unknown"}
+
         for order in orders:
             if order['order no'] == order_id:
                 result = order
                 break
 
         return result
+
+    def get_user_orders(self, user_id):
+        user_orders = [order for order in orders if order['sender'] == user_id]
+
+        return user_orders
