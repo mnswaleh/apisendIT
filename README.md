@@ -1,6 +1,7 @@
 # apisendIT
 [![Maintainability](https://api.codeclimate.com/v1/badges/ee20ab7ff0fd269b574d/maintainability)](https://codeclimate.com/github/mnswaleh/apisendIT/maintainability)
 [![Coverage Status](https://coveralls.io/repos/github/mnswaleh/apisendIT/badge.svg?branch=ft-signin-endpoint-161911732)](https://coveralls.io/github/mnswaleh/apisendIT?branch=ft-signin-endpoint-161911732)
+https://travis-ci.org/mnswaleh/apisendIT.svg?branch=ft-signin-endpoint-161911732
 # FEATURES
 API has the following features:
 1. GET /parcels
