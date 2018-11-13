@@ -51,7 +51,6 @@ class TestDeliveryOrders(unittest.TestCase):
         result = json.loads(response.data)
         self.assertIn('email@gmail.com', str(result))
 
-
     def test_signin_user(self):
         """Test endpoint to signin user"""
         response = self.app.post(

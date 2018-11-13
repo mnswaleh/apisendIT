@@ -26,20 +26,30 @@ pip install virtualenv
     ```
 
 ###### create virtual evironment:
-1. virtualenv venv
-2. source venv/bin/activate
+```
+virtualenv venv
+source venv/bin/activate
+```
 
+```
 pip install -r requirements.txt
+```
 
 # TEST
 install postman
 
 ## on pytets
-1. on terminal type pytest
+1. on terminal type
+    ```
+    pytest
+    ```
 2. all the tests should pass
 
-on terminal: type export FLASK_APP=run.py
-                  flask run
+on terminal: type 
+    ```
+    export FLASK_APP=run.py
+    flask run
+    ```
 
 ## On postman:
 ###### CREATE USER

@@ -57,7 +57,7 @@ class DeliveryOrder(Resource):
         return make_response(jsonify(result))
 
     def put(self, parcelId):
-        """Update a delivery order"""
+        """Update a delivery order current location and status"""
         result = reqparse.RequestParser()
         result.add_argument('current location', type=str,
                             help="current location is required", required=True)
@@ -76,7 +76,7 @@ class DeliveryOrder(Resource):
 
 
 class DeliveryOrderUpdate(Resource):
-    """Create Delivery Orders Object to create delivery order and fetch all orders"""
+    """Create Delivery Orders Object to cancel delivery location"""
 
     def __init__(self):
         self.orders_db = OrdersModel()
@@ -85,7 +85,7 @@ class DeliveryOrderUpdate(Resource):
         """Cancel a delivery order"""
         result = self.orders_db.cancel_order(parcelId)
 
-        return make_response(jsonify({"message": "order " + parcelId + " is canceled!", "Order " + parcelId: result}))
+        return make_response(jsonify(result))
 
 
 class DeliveryOrderDeliveryUpdate(Resource):
@@ -108,4 +108,4 @@ class DeliveryOrderDeliveryUpdate(Resource):
             result = self.orders_db.change_delivery(
                 parcelId, data['delivery location'])
 
-            return make_response(jsonify({"message": "order " + parcelId + " Delivery location changed!", "Order " + parcelId: result}))
+            return make_response(jsonify(result))

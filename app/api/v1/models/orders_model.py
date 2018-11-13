@@ -77,7 +77,8 @@ class OrdersModel():
         for order in self.order_db:
             if order['order no'] == order_id:
                 order['status'] = "canceled"
-                result = order
+                result = {"message": "order " + order_id +
+                          " is canceled!", "Order " + order_id: order}
                 break
 
         return result
@@ -89,7 +90,8 @@ class OrdersModel():
         for order in self.order_db:
             if order['order no'] == order_id:
                 order['delivery location'] = delivery_location
-                result = order
+                result = {"message": "order " + order_id +
+                          " Delivery location changed!", "Order " + order_id: order}
                 break
 
         return result
