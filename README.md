@@ -1,6 +1,6 @@
 # apisendIT
 [![Maintainability](https://api.codeclimate.com/v1/badges/ee20ab7ff0fd269b574d/maintainability)](https://codeclimate.com/github/mnswaleh/apisendIT/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/ee20ab7ff0fd269b574d/test_coverage)](https://codeclimate.com/github/mnswaleh/apisendIT/test_coverage)
+[![Coverage Status](https://coveralls.io/repos/github/mnswaleh/apisendIT/badge.svg?branch=bg-fix-travis-build-161859761)](https://coveralls.io/github/mnswaleh/apisendIT?branch=bg-fix-travis-build-161859761)
 
 # FEATURES
 API has the following features:
