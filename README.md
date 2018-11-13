@@ -47,7 +47,7 @@ on terminal: type export FLASK_APP=run.py
 2. send post request with user details eg,
 ```
     {
-    "username": "tom"
+    "username": "tom",
     "first_name": "thomas",
     "second_name": "Kalume",
     "email": "tom@gmail.com",
@@ -56,7 +56,30 @@ on terminal: type export FLASK_APP=run.py
     "password": "243677",
 }
 ```
+3. should receive response with code 201 and user details eg,
+```
+    {
+    "email": "tom@gmail.com",
+    "first_name": "thomas",
+    "gender": "male",
+    "location": "kakamega",
+    "password": "243677",
+    "second_name": "Kalume",
+    "type": "user",
+    "user id": 1,
+    "username": "tom"
+}
+```
 
+###### SIGNIN USER
+1. Enter URL http://127.0.0.1:5000/api/v1/users/
+2. send post request with username and password eg,
+```
+    {
+    "username": "tom",
+    "password": "243677",
+}
+```
 3. should receive response with code 201 and user details eg,
 ```
     {
@@ -85,7 +108,6 @@ on terminal: type export FLASK_APP=run.py
 	"sender": 1
 }
 ```
-
 3. should receive response with code 201 and order details eg,
 ```
     {
