@@ -1,6 +1,7 @@
 # apisendIT
 [![Maintainability](https://api.codeclimate.com/v1/badges/ee20ab7ff0fd269b574d/maintainability)](https://codeclimate.com/github/mnswaleh/apisendIT/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/ee20ab7ff0fd269b574d/test_coverage)](https://codeclimate.com/github/mnswaleh/apisendIT/test_coverage)
+[![Coverage Status](https://coveralls.io/repos/github/mnswaleh/apisendIT/badge.svg?branch=ft-signin-endpoint-161911732)](https://coveralls.io/github/mnswaleh/apisendIT?branch=ft-signin-endpoint-161911732)
+[![Build Status](https://travis-ci.org/mnswaleh/apisendIT.svg?branch=ft-signin-endpoint-161911732)](https://travis-ci.org/mnswaleh/apisendIT)
 
 # FEATURES
 API has the following features:

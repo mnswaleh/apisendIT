@@ -15,6 +15,7 @@ class Users(Resource):
 
     def post(self):
         """Create User"""
+        result = {}
         self.result.add_argument(
             'username', type=str, help="username is required to be a string", required=True, location='json')
         self.result.add_argument(
@@ -33,11 +34,11 @@ class Users(Resource):
         inputs_validate = ValidateInputs(data, 'create_user')
         data_validation = inputs_validate.confirm_input()
         if data_validation != "ok":
-            return make_response(jsonify({"Error": data_validation}), 400)
+            result = make_response(jsonify({"Error": data_validation}), 400)
         else:
-            result = self.orders_db.create_user(data)
-
-            return make_response(jsonify(result), 201)
+            res = self.orders_db.create_user(data)
+            result = make_response(jsonify(res), 201)
+        return result
 
 
 class UserSignin(Resource):
@@ -76,9 +77,12 @@ class UserOrders(Resource):
     def get(self, userId):
         """ Fetch all delivery orders created by a specific user"""
         user = self.users_db.get_user(userId)
-        result = self.orders_db.get_user_orders(userId)
+        if user == "user not found":
+            return make_response(jsonify({"Message": user}))
+        else:
+            result = self.orders_db.get_user_orders(userId)
 
-        return make_response(jsonify({"Title": "Delivery orders by " + user['username'], "Delivery orders list": result}))
+            return make_response(jsonify({"Title": "Delivery orders by " + user['username'], "Delivery orders list": result}))
 
 
 class UserDeliveredOrders(Resource):

@@ -78,7 +78,7 @@ class OrdersModel():
             if order['order no'] == order_id:
                 order['status'] = "canceled"
                 result = {"message": "order " + order_id +
-                          " is canceled!", "Order " + order_id: order}
+                                     " is canceled!", "Order " + order_id: order}
                 break
 
         return result
@@ -91,7 +91,7 @@ class OrdersModel():
             if order['order no'] == order_id:
                 order['delivery location'] = delivery_location
                 result = {"message": "order " + order_id +
-                          " Delivery location changed!", "Order " + order_id: order}
+                                     " Delivery location changed!", "Order " + order_id: order}
                 break
 
         return result
@@ -122,7 +122,6 @@ class OrdersModel():
         """Get orders in transit by a specific user"""
         user_orders = [order for order in self.order_db if (
             order['sender'] == user_id and order['status'] == 'in transit')]
-
         return len(user_orders)
 
 
@@ -220,3 +219,4 @@ class ValidateInputs():
             message = "ok"
 
         return message
+        

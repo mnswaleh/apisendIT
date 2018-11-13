@@ -21,12 +21,6 @@ class TestDeliveryOrders(unittest.TestCase):
             "password": "123456"
         }
 
-        self.user_login = {
-            "username": "tom",
-            "password": "123456",
-            "type": "user"
-        }
-
         self.order_data = {
             "order no": "588356",
             "pick up location": "nanyuki",
@@ -53,8 +47,9 @@ class TestDeliveryOrders(unittest.TestCase):
 
     def test_signin_user(self):
         """Test endpoint to signin user"""
+        user_login = self.user_data
         response = self.app.post(
-            '/api/v1/users/signin', data=json.dumps(self.user_login), content_type='application/json')
+            '/api/v1/users/signin', data=json.dumps({"username": user_login['username'], "password": user_login['password']}), content_type='application/json')
         self.assertEqual(response.status_code, 200)
 
         result = json.loads(response.data)
