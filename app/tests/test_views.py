@@ -99,6 +99,7 @@ class TestDeliveryOrders(unittest.TestCase):
 
     def test_cancel_delivery_order(self):
         """Test endpoint to cancel delivery order"""
+        self.test_create_order()
         response = self.app.put(
             '/api/v1/parcels/588356/cancel', content_type='application/json')
         self.assertEqual(response.status_code, 200)
