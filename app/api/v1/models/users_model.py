@@ -8,17 +8,17 @@ class UsersModel():
     def __init__(self):
         self.user_db = users
 
-    def create_user(self, username, first_name, second_name, email, gender, location, password):
+    def create_user(self, data):
         """Create user and append to users db"""
         user = {
             "user id": len(self.user_db) + 1,
-            "username": username,
-            "first_name": first_name,
-            "second_name": second_name,
-            "email": email,
-            "gender": gender,
-            "location": location,
-            "password": password,
+            "username": data['username'],
+            "first_name": data['first_name'],
+            "second_name": data['second_name'],
+            "email": data['email'],
+            "gender": data['gender'],
+            "location": data['location'],
+            "password": data['password'],
             "type": "user"
         }
 
@@ -34,3 +34,13 @@ class UsersModel():
         """Get a specific user from the database"""
         my_user = [user for user in self.user_db if user['user id'] == user_id]
         return my_user[0]
+
+    def user_login(self, username, password):
+        """User login method"""
+        my_user = [user for user in self.user_db if (
+            user['username'] == username and user['password'] == password)]
+
+        if not my_user:
+            return "username or password invalid!"
+        else:
+            return my_user

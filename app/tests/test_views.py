@@ -12,13 +12,17 @@ class TestDeliveryOrders(unittest.TestCase):
         create_app().testing = True
         self.app = create_app().test_client()
         self.user_data = {
-            "user id": 1,
             "username": "tom",
             "first_name": "thomas",
             "second_name": "wakati",
             "email": "email@gmail.com",
             "gender": "male",
             "location": "eldoret",
+            "password": "123456"
+        }
+
+        self.user_login = {
+            "username": "tom",
             "password": "123456",
             "type": "user"
         }
@@ -27,8 +31,8 @@ class TestDeliveryOrders(unittest.TestCase):
             "order no": "588356",
             "pick up location": "nanyuki",
             "delivery location": "nairobi",
-            "weight": "2kg",
-            "price": "2000",
+            "weight": 2,
+            "price": 2000,
             "sender": 1
         }
 
@@ -46,6 +50,16 @@ class TestDeliveryOrders(unittest.TestCase):
 
         result = json.loads(response.data)
         self.assertIn('email@gmail.com', str(result))
+
+
+    def test_signin_user(self):
+        """Test endpoint to signin user"""
+        response = self.app.post(
+            '/api/v1/users/signin', data=json.dumps(self.user_login), content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+
+        result = json.loads(response.data)
+        self.assertIn('tom', str(result))
 
     def test_create_order(self):
         """Test endpoint to create order"""

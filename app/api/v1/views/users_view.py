@@ -1,29 +1,69 @@
 """Users view Module"""
 
-from flask import make_response, jsonify, request
-from flask_restful import Resource
+from flask import make_response, jsonify
+from flask_restful import Resource, reqparse
 from app.api.v1.models.users_model import UsersModel
 from app.api.v1.models.orders_model import OrdersModel, ValidateInputs
 
 
 class Users(Resource):
-    """Create users class to create a user orders"""
+    """Create users class to create a user"""
+
+    def __init__(self):
+        self.orders_db = UsersModel()
+        self.result = reqparse.RequestParser()
+
+    def post(self):
+        """Create User"""
+        self.result.add_argument(
+            'username', type=str, help="username is required to be a string", required=True, location='json')
+        self.result.add_argument(
+            'first_name', type=str, help="first name is required to be a string", required=True, location='json')
+        self.result.add_argument(
+            'second_name', type=str, help="second name is required to be a string", required=True, location='json')
+        self.result.add_argument(
+            'email', type=str, help="email", required=True, location='json')
+        self.result.add_argument(
+            'gender', type=str, help="gender is required to be a string", required=True, location='json')
+        self.result.add_argument(
+            'location', type=str, help="location is required to be a string", required=True, location='json')
+        self.result.add_argument(
+            'password', type=str, help="password is required to be a string", required=True, location='json')
+        data = self.result.parse_args()
+        inputs_validate = ValidateInputs(data, 'create_user')
+        data_validation = inputs_validate.confirm_input()
+        if data_validation != "ok":
+            return make_response(jsonify({"Error": data_validation}), 400)
+        else:
+            result = self.orders_db.create_user(data)
+
+            return make_response(jsonify(result), 201)
+
+
+class UserSignin(Resource):
+    """Create users class to signin a user"""
 
     def __init__(self):
         self.orders_db = UsersModel()
 
     def post(self):
         """Create delivery User"""
-        data = request.get_json(force=True)
-        inputs_validate = ValidateInputs(data, 'create_user')
+        result = reqparse.RequestParser()
+
+        result.add_argument(
+            'username', type=str, help="invalid useraname or password", required=True, location='json')
+        result.add_argument(
+            'password', type=str, help="invalid useraname or password", required=True, location='json')
+        data = result.parse_args()
+        inputs_validate = ValidateInputs(data, 'signin')
         data_validation = inputs_validate.confirm_input()
         if data_validation != "ok":
             return make_response(jsonify({"Error": data_validation}), 400)
         else:
-            result = self.orders_db.create_user(data['username'], data['first_name'],
-                                                data['second_name'], data['email'], data['gender'], data['location'], data['password'])
+            result = self.orders_db.user_login(
+                data['username'], data['password'])
 
-            return make_response(jsonify(result), 201)
+            return make_response(jsonify(result), 200)
 
 
 class UserOrders(Resource):
@@ -35,8 +75,8 @@ class UserOrders(Resource):
 
     def get(self, userId):
         """ Fetch all delivery orders created by a specific user"""
-        user = self.users_db.get_user(userId)
-        result = self.orders_db.get_user_orders(userId)
+        user = self.users_db.get_user(1)
+        result = self.orders_db.get_user_orders(1)
 
         return make_response(jsonify({"Title": "Delivery orders by " + user['username'], "Delivery orders list": result}))
 
