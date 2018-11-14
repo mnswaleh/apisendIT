@@ -36,12 +36,15 @@ class DeliveryOrders(Resource):
         data = request.get_json(force=True)
         inputs_validate = ValidateInputs(data, 'create_order')
         data_validation = inputs_validate.confirm_input()
+
+        response = {}
         if data_validation != "ok":
-            return make_response(jsonify({"Error": data_validation}), 400)
+            response = make_response(jsonify({"Error": data_validation}), 400)
         else:
             result = self.orders_db.create_order(data)
+            response = make_response(jsonify(result), 201)
 
-            return make_response(jsonify(result), 201)
+        return response
 
 
 class DeliveryOrder(Resource):
@@ -90,12 +93,9 @@ class DeliveryOrderUpdate(Resource):
 
 class DeliveryOrderDeliveryUpdate(Resource):
     """Create Delivery Orders Object to update delivery order details"""
-
-    def __init__(self):
-        self.orders_db = OrdersModel()
-
     def put(self, parcelId):
         """Change delivery location"""
+        orders_db = OrdersModel()
         result = reqparse.RequestParser()
         result.add_argument('delivery location', type=str,
                             help="current location is required", required=True)
@@ -105,7 +105,7 @@ class DeliveryOrderDeliveryUpdate(Resource):
         if data_validation != "ok":
             return make_response(jsonify({"Error": data_validation}), 400)
         else:
-            result = self.orders_db.change_delivery(
+            result = orders_db.change_delivery(
                 parcelId, data['delivery location'])
 
             return make_response(jsonify(result))

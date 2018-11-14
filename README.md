@@ -63,7 +63,7 @@ on terminal: type
     "email": "tom@gmail.com",
     "gender": "male",
     "location": "kakamega",
-    "password": "243677",
+    "password": "243677"
 }
 ```
 3. should receive response with code 201 and user details eg,
@@ -113,7 +113,7 @@ on terminal: type
 	"order no": "367857",
 	"pick up location": "nyahururu",
 	"delivery location": "kitale",
-	"weight": "2kg",
+	"weight": 2,
 	"price": 200,
 	"sender": 1
 }
@@ -134,7 +134,7 @@ on terminal: type
 }
 ```
 
-###### FETCH ALL##### ORDERS
+###### FETCH ALL ORDERS
 1. Enter URL http://127.0.0.1:5000/api/v1/parcels
 2. send get request 
 3. should receive response with code 200 and all delivery orders created eg,

@@ -1,4 +1,5 @@
 """Users Module"""
+
 users = []
 
 
@@ -22,7 +23,8 @@ class UsersModel():
             "type": "user"
         }
         self.user_db.append(user)
-        return user
+
+        return {"user name": user['username'], "user details":user}
 
     def get_users(self):
         """Get all users in the database"""
@@ -46,4 +48,3 @@ class UsersModel():
             return "username or password invalid!"
         else:
             return my_user
-            

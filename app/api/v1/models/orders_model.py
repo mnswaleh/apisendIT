@@ -36,14 +36,6 @@ class OrdersModel():
 
     def get_orders(self):
         """Get orders in database"""
-        users = self.users_db.get_users()
-
-        for order in self.order_db:
-            for user in users:
-                if user['user id'] == order['sender']:
-                    order['sender'] = user['username']
-                    break
-
         return self.order_db
 
     def get_order(self, order_id):
@@ -219,4 +211,3 @@ class ValidateInputs():
             message = "ok"
 
         return message
-        

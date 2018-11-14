@@ -76,13 +76,9 @@ class UserOrders(Resource):
 
     def get(self, userId):
         """ Fetch all delivery orders created by a specific user"""
-        user = self.users_db.get_user(userId)
-        if user == "user not found":
-            return make_response(jsonify({"Message": user}))
-        else:
-            result = self.orders_db.get_user_orders(userId)
+        result = self.orders_db.get_user_orders(userId)
 
-            return make_response(jsonify({"Title": "Delivery orders by " + user['username'], "Delivery orders list": result}))
+        return make_response(jsonify({"Title": "Delivery orders by user " + str(userId), "Delivery orders list": result}))
 
 
 class UserDeliveredOrders(Resource):
