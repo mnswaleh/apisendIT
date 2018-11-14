@@ -4,7 +4,7 @@ from flask import Flask, Blueprint
 #from flask_jwt_extended import JWTManager
 
 from app.api.v1 import VERSION1
-from app.api.v2 import VERSION2
+#from app.api.v2 import VERSION2
 
 
 def create_app():
