@@ -64,11 +64,11 @@ class TestDeliveryOrders(unittest.TestCase):
         result = json.loads(response.data)
         self.assertIn('pending', str(result))
 
-        new_data = self.order_data
-        new_data['order no'] = ""
+        new_order = self.order_data
+        new_order['order no'] = ""
 
         response = self.app.post(
-            '/api/v1/parcels', data=json.dumps(new_data), content_type='application/json')
+            '/api/v1/parcels', data=json.dumps(new_order), content_type='application/json')
         self.assertEqual(response.status_code, 400)
 
         result = json.loads(response.data)
