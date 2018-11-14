@@ -1,11 +1,29 @@
+"""Initialize version 1"""
+
 from flask_restful import Api, Resource
 from flask import Blueprint
-from app.api.v1.views import DelieryOrders, DelieryOrder
+from app.api.v1.views.orders_view import (
+    DeliveryOrders, DeliveryOrder, DeliveryOrderUpdate, DeliveryOrderDeliveryUpdate)
+from app.api.v1.views.users_view import (
+    UserOrders, UserDeliveredOrders, UserOrdersInTransit, Users, UserSignin)
 
-version1 = Blueprint('sendit', __name__, url_prefix="/api/v1")
+VERSION1 = Blueprint('sendit', __name__, url_prefix="/api/v1")
 
-api = Api(version1)
+API = Api(VERSION1)
 
-api.add_resource(DelieryOrders, '/parcels')
+"""Add resources"""
 
-api.add_resource(DelieryOrder, '/parcels/<parcelId>')
+API.add_resource(DeliveryOrders, '/parcels', strict_slashes=False)
+API.add_resource(DeliveryOrder, '/parcels/<parcelId>', strict_slashes=False)
+API.add_resource(DeliveryOrderUpdate,
+                 '/parcels/<parcelId>/cancel', strict_slashes=False)
+API.add_resource(DeliveryOrderDeliveryUpdate,
+                 '/parcels/<parcelId>/change-delivery', strict_slashes=False)
+API.add_resource(UserOrders, '/users/<int:userId>/parcels',
+                 strict_slashes=False)
+API.add_resource(UserDeliveredOrders,
+                 '/users/<int:userId>/delivered', strict_slashes=False)
+API.add_resource(UserOrdersInTransit,
+                 '/users/<int:userId>/in-transit', strict_slashes=False)
+API.add_resource(Users, '/users', strict_slashes=False)
+API.add_resource(UserSignin, '/users/signin', strict_slashes=False)
