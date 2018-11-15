@@ -90,10 +90,9 @@ class UserDeliveredOrders(Resource):
 
     def get(self, userId):
         """Fetch delivery orders delivered for a specific user"""
-        user = self.users_db.get_user(userId)
         result = self.orders_db.get_delivered_orders(userId)
 
-        return make_response(jsonify({"Delivered orders for " + user['username']: result}))
+        return make_response(jsonify({"Delivered orders for user" + str(userId): result}))
 
 
 class UserOrdersInTransit(Resource):
@@ -105,7 +104,6 @@ class UserOrdersInTransit(Resource):
 
     def get(self, userId):
         """Fetch delivery orders in transit for a specific user"""
-        user = self.users_db.get_user(userId)
         result = self.orders_db.get_orders_in_transit(userId)
 
-        return make_response(jsonify({"Orders in-transit for " + user['username']: result}))
+        return make_response(jsonify({"Orders in-transit for user"  + str(userId): result}))
