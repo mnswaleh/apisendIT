@@ -1,5 +1,4 @@
 """Orders Models"""
-from flask import json
 from datetime import date
 from .users_model import UsersModel
 orders = []
@@ -12,7 +11,7 @@ class OrdersModel():
         self.users_db = UsersModel()
         self.order_db = orders
 
-    def create_order(self, order_no, pick_up, delivery, weight, price, sender):
+    def create_order(self, data):
         """Create order and append it to orders"""
         today = date.today()
 
@@ -20,15 +19,15 @@ class OrdersModel():
 
         order = {
             "order id": len(self.order_db) + 1,
-            "order no": order_no,
+            "order no": data['order no'],
             "date created": created,
-            "pick up location": pick_up,
-            "delivery location": delivery,
-            "current location": pick_up,
-            "weight": weight,
-            "price": price,
+            "pick up location": data['pick up location'],
+            "delivery location": data['delivery location'],
+            "current location": data['pick up location'],
+            "weight": data['weight'],
+            "price": data['price'],
             "status": "pending",
-            "sender": sender
+            "sender": data['sender']
         }
 
         self.order_db.append(order)
@@ -37,14 +36,6 @@ class OrdersModel():
 
     def get_orders(self):
         """Get orders in database"""
-        users = self.users_db.get_users()
-
-        for order in self.order_db:
-            for user in users:
-                if user['user id'] == order['sender']:
-                    order['sender'] = user['username']
-                    break
-
         return self.order_db
 
     def get_order(self, order_id):
@@ -78,7 +69,8 @@ class OrdersModel():
         for order in self.order_db:
             if order['order no'] == order_id:
                 order['status'] = "canceled"
-                result = order
+                result = {"message": "order " + order_id +
+                                     " is canceled!", "Order " + order_id: order}
                 break
 
         return result
@@ -90,22 +82,17 @@ class OrdersModel():
         for order in self.order_db:
             if order['order no'] == order_id:
                 order['delivery location'] = delivery_location
-                result = order
+                result = {"message": "order " + order_id +
+                                     " Delivery location changed!", "Order " + order_id: order}
                 break
 
         return result
 
     def get_user_orders(self, user_id):
         """Get orders created by specific order"""
-        users = self.users_db.get_users()
-
         user_orders = []
         for order in self.order_db:
             if order['sender'] == user_id:
-                for user in users:
-                    if user['user id'] == order['sender']:
-                        order['sender'] = user['username']
-                        break
                 user_orders.append(order)
 
         return user_orders
@@ -121,7 +108,6 @@ class OrdersModel():
         """Get orders in transit by a specific user"""
         user_orders = [order for order in self.order_db if (
             order['sender'] == user_id and order['status'] == 'in transit')]
-
         return len(user_orders)
 
 
@@ -142,6 +128,8 @@ class ValidateInputs():
                 message = self.create_order_inputs()
             elif self.data_for == "update_order":
                 message = self.update_order_inputs()
+            elif self.data_for == "signin":
+                message = self.user_signin_inputs()
             else:
                 message = self.change_delivery_inputs()
 
@@ -149,72 +137,71 @@ class ValidateInputs():
 
     def create_user_inputs(self):
         """confirm inputs for creating user"""
-        if 'username' in self.user_input and 'first_name' in self.user_input and 'first_name' in self.user_input and 'second_name' in self.user_input and 'email' in self.user_input and 'location' in self.user_input and 'gender' in self.user_input and 'password' in self.user_input:
-            if not self.user_input['username']:
-                message = "username missing"
-            elif not self.user_input['first_name']:
-                message = "first name  missing"
-            elif not self.user_input['second_name']:
-                message = "second name  missing"
-            elif not self.user_input['email']:
-                message = "email  missing"
-            elif not self.user_input['location']:
-                message = "location  missing"
-            elif not self.user_input['gender']:
-                message = "gender missing"
-            elif not self.user_input['password']:
-                message = "password missing"
-            else:
-                message = "ok"
+        if not self.user_input['username']:
+            message = "username missing"
+        elif not self.user_input['first_name']:
+            message = "first name  missing"
+        elif not self.user_input['second_name']:
+            message = "second name  missing"
+        elif not self.user_input['email']:
+            message = "email  missing"
+        elif not self.user_input['location']:
+            message = "location  missing"
+        elif not self.user_input['gender']:
+            message = "gender missing"
+        elif not self.user_input['password']:
+            message = "password missing"
         else:
-            message = "Bad request, An Entry is missing"
+            message = "ok"
+
+        return message
+
+    def user_signin_inputs(self):
+        """confirm inputs for user signin"""
+        if not self.user_input['username']:
+            message = "username missing"
+        elif not self.user_input['password']:
+            message = "password missing"
+        else:
+            message = "ok"
 
         return message
 
     def create_order_inputs(self):
         """confirm inputs for creating order"""
-        if 'order no' in self.user_input and 'pick up location' in self.user_input and 'delivery location' in self.user_input and 'weight' in self.user_input and 'price' in self.user_input and 'sender' in self.user_input:
-            if not self.user_input['order no']:
-                message = "order no missing"
-            elif not self.user_input['pick up location']:
-                message = "pickup location missing"
-            elif not self.user_input['delivery location']:
-                message = "delivery locationv missing"
-            elif not self.user_input['weight']:
-                message = "weight missing"
-            elif not self.user_input['price']:
-                message = "price missing"
-            elif not self.user_input['sender']:
-                message = "sender missing"
-            else:
-                message = "ok"
+        if not self.user_input['order no']:
+            message = "order no missing"
+        elif not self.user_input['pick up location']:
+            message = "pickup location missing"
+        elif not self.user_input['delivery location']:
+            message = "delivery locationv missing"
+        elif not self.user_input['weight']:
+            message = "weight missing"
+        elif not self.user_input['price']:
+            message = "price missing"
+        elif not self.user_input['sender']:
+            message = "sender missing"
         else:
-            message = "Bad request, An Entry is missing"
+            message = "ok"
 
         return message
 
     def update_order_inputs(self):
         """confirm inputs for updating order"""
-        if 'current location' in self.user_input and 'status' in self.user_input:
-            if not self.user_input['current location']:
-                message = "current location missing"
-            elif not self.user_input['status']:
-                message = "status missing"
-            else:
-                message = "ok"
+        if not self.user_input['current location']:
+            message = "current location missing"
+        elif not self.user_input['status']:
+            message = "status missing"
         else:
-            message = "Bad request, An Entry is missing"
+            message = "ok"
 
         return message
 
     def change_delivery_inputs(self):
         """confirm inputs for changing delivery location"""
-        if 'delivery location' in self.user_input:
-            if not self.user_input['delivery location']:
-                message = "delivery location missing"
-            else:
-                message = "ok"
+        if not self.user_input['delivery location']:
+            message = "delivery location missing"
         else:
-            message = "Bad request, An Entry is missing"
+            message = "ok"
 
         return message

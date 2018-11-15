@@ -12,23 +12,21 @@ class TestDeliveryOrders(unittest.TestCase):
         create_app().testing = True
         self.app = create_app().test_client()
         self.user_data = {
-            "user id": 1,
             "username": "tom",
             "first_name": "thomas",
             "second_name": "wakati",
             "email": "email@gmail.com",
             "gender": "male",
             "location": "eldoret",
-            "password": "123456",
-            "type": "user"
+            "password": "123456"
         }
 
         self.order_data = {
             "order no": "588356",
             "pick up location": "nanyuki",
             "delivery location": "nairobi",
-            "weight": "2kg",
-            "price": "2000",
+            "weight": 2,
+            "price": 2000,
             "sender": 1
         }
 
@@ -47,6 +45,16 @@ class TestDeliveryOrders(unittest.TestCase):
         result = json.loads(response.data)
         self.assertIn('email@gmail.com', str(result))
 
+    def test_signin_user(self):
+        """Test endpoint to signin user"""
+        user_login = self.user_data
+        response = self.app.post(
+            '/api/v1/users/signin', data=json.dumps({"username": user_login['username'], "password": user_login['password']}), content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+
+        result = json.loads(response.data)
+        self.assertIn('tom', str(result))
+
     def test_create_order(self):
         """Test endpoint to create order"""
         response = self.app.post(
@@ -55,6 +63,16 @@ class TestDeliveryOrders(unittest.TestCase):
 
         result = json.loads(response.data)
         self.assertIn('pending', str(result))
+
+        new_order = self.order_data
+        new_order['order no'] = ""
+
+        response = self.app.post(
+            '/api/v1/parcels', data=json.dumps(new_order), content_type='application/json')
+        self.assertEqual(response.status_code, 400)
+
+        result = json.loads(response.data)
+        self.assertIn('missing', str(result))
 
     def test_get_all_orders(self):
         """Test endpoint to fetch all orders"""
@@ -86,6 +104,7 @@ class TestDeliveryOrders(unittest.TestCase):
 
     def test_cancel_delivery_order(self):
         """Test endpoint to cancel delivery order"""
+        self.test_create_order()
         response = self.app.put(
             '/api/v1/parcels/588356/cancel', content_type='application/json')
         self.assertEqual(response.status_code, 200)
