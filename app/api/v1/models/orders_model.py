@@ -90,15 +90,9 @@ class OrdersModel():
 
     def get_user_orders(self, user_id):
         """Get orders created by specific order"""
-        users = self.users_db.get_users()
-
         user_orders = []
         for order in self.order_db:
             if order['sender'] == user_id:
-                for user in users:
-                    if user['user id'] == order['sender']:
-                        order['sender'] = user['username']
-                        break
                 user_orders.append(order)
 
         return user_orders

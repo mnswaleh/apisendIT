@@ -87,7 +87,7 @@ on terminal: type
 ```
     {
     "username": "tom",
-    "password": "243677",
+    "password": "243677"
 }
 ```
 3. should receive response with code 201 and user details eg,
